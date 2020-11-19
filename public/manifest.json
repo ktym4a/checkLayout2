@@ -1,0 +1,11 @@
+{
+  "manifest_version": 2,
+  "name": "checkYourLayout",
+  "version": "0.0.0.1",
+  "description": "layout check extention for Chrome",
+  "browser_action": {
+    "default_popup": "index.html"
+  },
+  "author": "KTYM4a",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
