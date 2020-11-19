@@ -7,6 +7,7 @@ module.exports = {
   entry: {
     app: './src/index.tsx',
     background: './src/background.ts',
+    contents: './src/contents.tsx',
   },
   output: {
     path: __dirname + '/build',
