@@ -6,6 +6,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
   entry: {
     app: './src/index.tsx',
+    background: './src/background.ts',
   },
   output: {
     path: __dirname + '/build',
