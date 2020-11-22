@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import './contents.css';
 
 const Main = () => {
-  return <div>App</div>;
+  return <div className='test'>App</div>;
 };
 
 chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
