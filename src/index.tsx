@@ -1,42 +1,69 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Form, Button } from 'react-bootstrap';
+
+import { Form, Button, Container } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
-  useEffect(() => {
+  const [layoutParams, setLayoutParams] = useState<{
+    width: string;
+    max_width: string;
+  }>({ width: '', max_width: '' });
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       console.log(tabs);
       tabs[0] &&
         tabs[0].id &&
-        chrome.tabs.sendMessage(
-          tabs[0].id,
-          { message: '選択範囲ちょうだい' },
-          (item) => console.log(item)
-        );
+        chrome.tabs.sendMessage(tabs[0].id, { layout: layoutParams });
     });
-  }, []);
+  };
+
+  const changeMaxWidthValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLayoutParams({
+      ...layoutParams,
+      max_width: e.target.value,
+    });
+  };
+
+  const changeWidthValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLayoutParams({
+      ...layoutParams,
+      width: e.target.value,
+    });
+  };
 
   return (
-    <Form>
-      <Form.Group controlId='formBasicEmail'>
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type='email' placeholder='Enter email' />
-        <Form.Text className='text-muted'>
-          We'll never share your email with anyone else.
-        </Form.Text>
-      </Form.Group>
+    <Container>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId='formMaxWidth'>
+          <Form.Label>max-width</Form.Label>
+          <Form.Control
+            type='text'
+            name='max-width'
+            placeholder='1200px'
+            onChange={changeMaxWidthValue}
+            value={layoutParams.max_width}
+          />
+        </Form.Group>
 
-      <Form.Group controlId='formBasicPassword'>
-        <Form.Label>Password</Form.Label>
-        <Form.Control type='password' placeholder='Password' />
-      </Form.Group>
-      <Form.Group controlId='formBasicCheckbox'>
-        <Form.Check type='checkbox' label='Check me out' />
-      </Form.Group>
-      <Button variant='primary' type='submit'>
-        Submit
-      </Button>
-    </Form>
+        <Form.Group controlId='formWidth'>
+          <Form.Label>width</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='90%'
+            name='width'
+            onChange={changeWidthValue}
+            value={layoutParams.width}
+          />
+        </Form.Group>
+
+        <Button variant='primary' type='submit'>
+          Submit
+        </Button>
+      </Form>
+    </Container>
   );
 };
 

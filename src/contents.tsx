@@ -4,13 +4,12 @@ import ReactDOM from 'react-dom';
 import './contents.css';
 
 const Main = () => {
+  chrome.runtime.onMessage.addListener(function (request, _sender) {
+    console.log(request.layout);
+  });
+
   return <div className='test'>App</div>;
 };
-
-chrome.runtime.onMessage.addListener(function (request, _sender, sendResponse) {
-  console.log(request.message);
-  sendResponse('返事');
-});
 
 const app = document.createElement('div');
 app.id = 'my-extension-root';
