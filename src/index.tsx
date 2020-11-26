@@ -5,10 +5,8 @@ import { Form, Button, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
-  const [layoutParams, setLayoutParams] = useState<{
-    width: string;
-    max_width: string;
-  }>({ width: '', max_width: '' });
+  const [widthParam, setWidthParam] = useState<string>('');
+  const [maxWidthParam, setMaxWidthParam] = useState<string>('');
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -16,48 +14,28 @@ const App = () => {
       console.log(tabs);
       tabs[0] &&
         tabs[0].id &&
-        chrome.tabs.sendMessage(tabs[0].id, { layout: layoutParams });
-    });
-  };
-
-  const changeMaxWidthValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLayoutParams({
-      ...layoutParams,
-      max_width: e.target.value,
-    });
-  };
-
-  const changeWidthValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLayoutParams({
-      ...layoutParams,
-      width: e.target.value,
+        chrome.tabs.sendMessage(tabs[0].id, { widthParam, maxWidthParam });
     });
   };
 
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
-        <Form.Group controlId='formMaxWidth'>
-          <Form.Label>max-width</Form.Label>
-          <Form.Control
-            type='text'
-            name='max-width'
-            placeholder='1200px'
-            onChange={changeMaxWidthValue}
-            value={layoutParams.max_width}
-          />
-        </Form.Group>
+        <input
+          type='text'
+          name='max_width_param'
+          placeholder='1200px'
+          onChange={(e) => setMaxWidthParam(e.target.value)}
+          value={maxWidthParam}
+        />
 
-        <Form.Group controlId='formWidth'>
-          <Form.Label>width</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='90%'
-            name='width'
-            onChange={changeWidthValue}
-            value={layoutParams.width}
-          />
-        </Form.Group>
+        <input
+          type='text'
+          placeholder='90%'
+          name='width_param'
+          onChange={(e) => setWidthParam(e.target.value)}
+          value={widthParam}
+        />
 
         <Button variant='primary' type='submit'>
           Submit

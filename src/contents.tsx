@@ -5,7 +5,7 @@ import './contents.css';
 
 const Main = () => {
   chrome.runtime.onMessage.addListener(function (request, _sender) {
-    console.log(request.layout);
+    console.log(request);
   });
 
   return <div className='test'>App</div>;
