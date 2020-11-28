@@ -11,7 +11,7 @@ const Main = () => {
     (request: { widthParam: string; maxWidthParam: string }, _sender) => {
       console.log(request);
       setWidthParam(request.widthParam);
-      setWidthParam(request.maxWidthParam);
+      setMaxWidthParam(request.maxWidthParam);
     }
   );
 
