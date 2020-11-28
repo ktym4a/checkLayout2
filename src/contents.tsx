@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import './contents.css';
 
 const Main = () => {
-  chrome.runtime.onMessage.addListener(function (request, _sender) {
-    console.log(request);
-  });
+  const [widthParam, setWidthParam] = useState<string>('');
+  const [maxWidthParam, setMaxWidthParam] = useState<string>('');
 
-  return <div className='test'>App</div>;
+  chrome.runtime.onMessage.addListener(
+    (request: { widthParam: string; maxWidthParam: string }, _sender) => {
+      console.log(request);
+      setWidthParam(request.widthParam);
+      setWidthParam(request.maxWidthParam);
+    }
+  );
+
+  return (
+    <div className='test'>
+      {widthParam} + {maxWidthParam}
+    </div>
+  );
 };
 
 const app = document.createElement('div');
