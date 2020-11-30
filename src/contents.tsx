@@ -17,7 +17,7 @@ const Main = () => {
 
   return (
     <div className='test'>
-      {widthParam} + {maxWidthParam}
+      {widthParam} px + {maxWidthParam} px
     </div>
   );
 };
